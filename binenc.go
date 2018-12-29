@@ -3,8 +3,6 @@ package binenc
 import (
 	"encoding/binary"
 	"math"
-
-	"modernc.org/mathutil"
 )
 
 // Encoder is a binary encoding facility
@@ -88,9 +86,9 @@ func (e *Encoder) Uint64(value uint64) []byte {
 }
 
 // Decimal28 into LittleBig sequence of bytes
-func (e *Encoder) Decimal28(value mathutil.Int128) []byte {
-	binary.LittleEndian.PutUint64(e.buf[:8], uint64(value.Lo))
-	binary.LittleEndian.PutUint64(e.buf[8:16], uint64(value.Hi))
+func (e *Encoder) Decimal28(lo, hi uint64) []byte {
+	binary.LittleEndian.PutUint64(e.buf[:8], lo)
+	binary.LittleEndian.PutUint64(e.buf[8:16], hi)
 	return e.buf[:16]
 }
 
